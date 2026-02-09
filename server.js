@@ -11,7 +11,7 @@ app.use(express.json());
 
 // test route
 app.get("/", (req, res) => {
-  res.send("chanduAI backend running with Groq 🚀");
+  res.send("chanduAI" backend running with Groq 🚀");
 });
 
 // chat route
