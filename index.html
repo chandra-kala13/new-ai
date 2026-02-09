@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>chanduAI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f4f5;
+  font-family: system-ui;
+}
+
+.app {
+  width: 420px;
+  height: 560px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0,0,0,.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 14px;
+  text-align: center;
+  font-weight: 600;
+  background: #111827;
+  color: white;
+}
+
+.chat {
+  flex: 1;
+  padding: 14px;
+  overflow-y: auto;
+}
+
+.user, .bot {
+  padding: 10px 14px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  max-width: 80%;
+}
+
+.user {
+  background: #111827;
+  color: white;
+  margin-left: auto;
+}
+
+.bot {
+  background: #e5e7eb;
+}
+
+.input {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+button {
+  margin-left: 8px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 20px;
+  background: #111827;
+  color: white;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+  <div class="header">🤍 chanduAI</div>
+
+  <div class="chat" id="chat">
+    <div class="bot">Hello 👋 I’m chanduAI.</div>
+  </div>
+
+  <div class="input">
+    <input id="msg" placeholder="Ask anything..." />
+    <button onclick="send()">Send</button>
+  </div>
+</div>
+
+<script>
+async function send() {
+  const input = document.getElementById("msg");
+  const chat = document.getElementById("chat");
+  const text = input.value.trim();
+  if (!text) return;
+
+  chat.innerHTML += `<div class="user">${text}</div>`;
+  input.value = "";
+
+  const res = await fetch("http://localhost:3000/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: text })
+  });
+
+  const data = await res.json();
+  chat.innerHTML += `<div class="bot">${data.reply}</div>`;
+  chat.scrollTop = chat.scrollHeight;
+}
+</script>
+
+</body>
+</html>
