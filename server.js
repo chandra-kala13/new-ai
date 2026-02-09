@@ -1,17 +1,16 @@
 const express = require("express");
 const cors = require("cors");
-const fetch = require("node-fetch"); // Make sure node-fetch is installed
-require('dotenv').config(); // Load environment variables
-
-const GROQ_API_KEY = process.env.GROQ_API_KEY; // ✅ Only use environment variable
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// 🔑 GROQ API KEY
+const GROQ_API_KEY = "GROQ_API_KEY=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";
+
 // test route
 app.get("/", (req, res) => {
-  res.send("chanduAI" backend running with Groq 🚀");
+  res.send("chanduAI backend running with Groq 🚀");
 });
 
 // chat route
